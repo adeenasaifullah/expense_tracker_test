@@ -32,6 +32,7 @@ class _InputScreenState extends State<InputScreen> {
   bool DescriptionValidate = false;
   bool DateValidate = false;
   bool TimeValidate = false;
+  bool Validate = false;
   bool AmountValidate = false;
 
   @override
