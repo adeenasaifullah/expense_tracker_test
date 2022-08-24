@@ -64,12 +64,12 @@ class _TransactionListViewState extends State<TransactionListView> {
                 (ListOfExpenses.isEmpty)
                     ? Padding(
                         padding: EdgeInsets.fromLTRB(
-                            MediaQuery.of(context).size.width / 5,
+                            MediaQuery.of(context).size.width /7,
                             30,
                             MediaQuery.of(context).size.width / 3.5,
                             10),
                         child: Text(
-                          "Nothing to show here!",
+                          "Click the Add button to start!",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -157,6 +157,7 @@ class _TransactionListViewState extends State<TransactionListView> {
                 )
               ],
             ),
+
             Flexible(
                 child: ListView.builder(
               itemCount: ListOfExpenses.length,

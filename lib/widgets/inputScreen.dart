@@ -13,8 +13,8 @@ class InputScreen extends StatefulWidget {
 
 class _InputScreenState extends State<InputScreen> {
 
-  late var title;
-  late var description;
+  late var title = null;
+  late var description = null;
   DateTime? date;
   TimeOfDay? time;
   late String expenseType;
@@ -28,6 +28,11 @@ class _InputScreenState extends State<InputScreen> {
     'Income',
     'Expense',
   ];
+  bool TitleValidate = false;
+  bool DescriptionValidate = false;
+  bool DateValidate = false;
+  bool TimeValidate = false;
+  bool AmountValidate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,8 @@ class _InputScreenState extends State<InputScreen> {
                   borderRadius: BorderRadius.circular(8)
                 ),
                 child: TextField(
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                      errorText: TitleValidate ? 'Please enter title' : null,
                     contentPadding: EdgeInsets.only(left: 10),
                     border: InputBorder.none,
                       hintText: "Title",
@@ -74,7 +80,8 @@ class _InputScreenState extends State<InputScreen> {
                     borderRadius: BorderRadius.circular(8)
                 ),
                 child: TextField(
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                      errorText: DescriptionValidate ? 'Please enter description' : null,
                     contentPadding: EdgeInsets.only(left: 10),
                     border: InputBorder.none,
                     hintText: "Description",
@@ -87,11 +94,7 @@ class _InputScreenState extends State<InputScreen> {
                   {
                     description = x;
                   },
-                  // validator: (value) { if(value == "" ) {
-                  //   return "Please enter task";
-                  // } else {
-                  //   return null;
-                  // }},
+
                 ) ,
               ),
             ),
@@ -146,6 +149,7 @@ class _InputScreenState extends State<InputScreen> {
                     width: MediaQuery.of(context).size.width/1.5,
                     child: TextField(
                       decoration: InputDecoration(
+                          errorText: DateValidate ? 'Please enter date' : null,
 
                         contentPadding: EdgeInsets.only(left: 10),
                         border: InputBorder.none,
@@ -213,6 +217,7 @@ class _InputScreenState extends State<InputScreen> {
                       width: MediaQuery.of(context).size.width/1.5,
                       child: TextField(
                         decoration: InputDecoration(
+                            errorText: TimeValidate ? 'Please enter time' : null,
                           contentPadding: EdgeInsets.only(left: 10),
                           border: InputBorder.none,
 
@@ -284,7 +289,8 @@ class _InputScreenState extends State<InputScreen> {
                   enableInteractiveSelection: true,
                   controller: myController,
                   keyboardType: TextInputType.none,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                      errorText: AmountValidate ? 'Please enter an amount' : null,
                     contentPadding: EdgeInsets.only(left: 10),
                     border: InputBorder.none,
                       hintText: "Amount"
@@ -301,8 +307,18 @@ class _InputScreenState extends State<InputScreen> {
             NumPad(value: value, myController: myController,),
             OutlinedButton(onPressed: ()
                 {
+
+                  setState(() {
+
+                    (title == null) ? TitleValidate = true : TitleValidate = false;
+                    (description == null) ? DescriptionValidate = true : DescriptionValidate = false;
+                    (date == null) ? DateValidate = true : DateValidate = false;
+                    (time == null) ? TimeValidate = true : TimeValidate = false;
+                    (myController.text.isEmpty) ? AmountValidate = true : AmountValidate = false;
+                  });
                   if(title != null && description!=null && date != null && time != null && myController.text != null)
-                  {ExpenseModel newExpense = ExpenseModel(title, description, date!, time!, expenseType, double.parse(myController.text));
+                  {
+                    ExpenseModel newExpense = ExpenseModel(title, description, date!, time!, expenseType, double.parse(myController.text));
                   setState(() {
                     Navigator.pop(context);
                     widget.updateUI(newExpense);
